@@ -22,6 +22,10 @@ spring:
           uri: http://localhost:8761
           predicates:
             - Path=/eureka/**
+        - id: bank-account-savings-service
+          uri: lb://bank-account-savings-service
+          predicates:
+            - Path=/api/bank-account/savings/**
   security:
     oauth2:
       resourceserver:
