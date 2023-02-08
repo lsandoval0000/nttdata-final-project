@@ -22,6 +22,10 @@ spring:
           uri: http://localhost:8761
           predicates:
             - Path=/eureka/**
+        - id: credits-personal-service
+          uri: lb://credits-personal-service
+          predicates:
+            - Path=/api/credits/personal/**
   security:
     oauth2:
       resourceserver:
