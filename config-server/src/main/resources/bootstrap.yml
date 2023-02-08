@@ -1,0 +1,15 @@
+server:
+  port: 8081
+
+spring:
+  security:
+    user:
+      name: configserver
+      password: configserver
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/lsandoval0000/nttdata-final-project.git
+          search-paths: /config
+          default-label: "main"
