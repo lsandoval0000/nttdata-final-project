@@ -20,6 +20,7 @@
         <module>config-server</module>
         <module>registry-server</module>
         <module>credits-personal-service</module>
+        <module>bank-account-savings-service</module>
     </modules>
 
     <properties>

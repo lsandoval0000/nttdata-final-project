@@ -26,6 +26,11 @@ spring:
           uri: lb://credits-personal-service
           predicates:
             - Path=/api/credits/personal/**
+        - id: bank-account-savings-service
+          uri: lb://bank-account-savings-service
+          predicates:
+            - Path=/api/bank-account/savings/**
+
   security:
     oauth2:
       resourceserver:
