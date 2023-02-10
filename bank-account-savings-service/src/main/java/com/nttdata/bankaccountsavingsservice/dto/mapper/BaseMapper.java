@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
  */
 public abstract class BaseMapper<E, D> {
     /**
-     * Convert to entity e.
+     * Convert to entity.
      *
      * @param dto  the dto
      * @param args the args
@@ -25,7 +25,7 @@ public abstract class BaseMapper<E, D> {
      *
      * @param entity the entity
      * @param args   the args
-     * @return the d
+     * @return the dto
      */
     public abstract D convertToDto(E entity, Object... args);
 

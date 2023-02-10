@@ -1,11 +1,13 @@
 package com.nttdata.bankaccountsavingsservice.controller;
 
+import com.nttdata.bankaccountsavingsservice.dto.SavingsAccountDto;
 import com.nttdata.bankaccountsavingsservice.dto.deposit.DepositMoneyRequestDto;
 import com.nttdata.bankaccountsavingsservice.dto.newaccount.NewSavingsAccountRequestDto;
 import com.nttdata.bankaccountsavingsservice.dto.SavingsAccountResponseDto;
 import com.nttdata.bankaccountsavingsservice.dto.payment.PaymentInfoDto;
 import com.nttdata.bankaccountsavingsservice.dto.transaction.TransactionDetailDto;
 import com.nttdata.bankaccountsavingsservice.dto.withdraw.WithdrawMoneyRequestDto;
+import com.nttdata.bankaccountsavingsservice.service.SavingsAccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,65 +15,114 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.List;
 
 
+/**
+ * Savings account controller.
+ */
 @RestController
 @RequestMapping("/api/bank-account/savings")
 @RequiredArgsConstructor
 public class SavingsAccountController {
 
+    private final SavingsAccountService savingsAccountService;
+
+    /**
+     * New savings account.
+     *
+     * @param newSavingsAccountRequestDto the new savings account
+     * @return the response entity
+     */
     @PostMapping
     public ResponseEntity<SavingsAccountResponseDto> newSavingsAccount(
             @Valid @RequestBody NewSavingsAccountRequestDto newSavingsAccountRequestDto
     ) {
-        // TODO Implementation required
-        SavingsAccountResponseDto response = SavingsAccountResponseDto.builder().build();
+        SavingsAccountDto savingsAccountDto = savingsAccountService.newSavingsAccount(newSavingsAccountRequestDto);
+        SavingsAccountResponseDto response = SavingsAccountResponseDto
+                .builder()
+                .savingsAccount(savingsAccountDto)
+                .message("Savings account was successfully created.")
+                .build();
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
-                .path("/{accountId}/balance")
-                .buildAndExpand(response.getSavingsAccount().getAccountId())
+                .path("/{dni}/balance")
+                .buildAndExpand(newSavingsAccountRequestDto.getDni())
                 .toUri();
         return ResponseEntity.created(uri).body(response);
     }
 
-    @PostMapping("/{accountId}/deposit")
+    /**
+     * Deposit money into account.
+     *
+     * @param dni                    the dni
+     * @param depositMoneyRequestDto the deposit money request dto
+     * @return the response entity
+     */
+    @PostMapping("/{dni}/deposit")
     public ResponseEntity<SavingsAccountResponseDto> depositMoneyIntoAccount(
-            @PathVariable Long accountId,
+            @PathVariable String dni,
             @Valid @RequestBody DepositMoneyRequestDto depositMoneyRequestDto
     ) {
-        // TODO Implementation required
-        return ResponseEntity.ok().body(SavingsAccountResponseDto.builder().build());
+        SavingsAccountResponseDto savingsAccountResponseDto =
+                savingsAccountService.depositMoneyIntoAccount(dni, depositMoneyRequestDto);
+        return ResponseEntity.ok().body(savingsAccountResponseDto);
     }
 
-    @PostMapping("/{accountId}/withdrawal")
+    /**
+     * Withdraw money from account.
+     *
+     * @param dni                     the dni
+     * @param withdrawMoneyRequestDto the withdrawal money request dto
+     * @return the response entity
+     */
+    @PostMapping("/{dni}/withdrawal")
     public ResponseEntity<SavingsAccountResponseDto> withdrawMoneyFromAccount(
-            @PathVariable Long accountId,
+            @PathVariable String dni,
             @Valid @RequestBody WithdrawMoneyRequestDto withdrawMoneyRequestDto
     ) {
-        // TODO Implementation required
-        return ResponseEntity.ok().body(SavingsAccountResponseDto.builder().build());
+        SavingsAccountResponseDto savingsAccountResponseDto =
+                savingsAccountService.withdrawMoneyFromAccount(dni, withdrawMoneyRequestDto);
+        return ResponseEntity.ok().body(savingsAccountResponseDto);
     }
 
-    @PostMapping("/{accountId}/paid")
+    /**
+     * Pay using account.
+     *
+     * @param dni         the dni
+     * @param paymentInfo the payment info
+     * @return the response entity
+     */
+    @PostMapping("/{dni}/paid")
     public ResponseEntity<SavingsAccountResponseDto> payUsingAccount(
-            @PathVariable Long accountId,
+            @PathVariable String dni,
             @Valid @RequestBody PaymentInfoDto paymentInfo
     ) {
-        // TODO Implementation required
-        return ResponseEntity.ok().body(SavingsAccountResponseDto.builder().build());
+        SavingsAccountResponseDto savingsAccountResponseDto = savingsAccountService.payUsingAccount(dni, paymentInfo);
+        return ResponseEntity.ok().body(savingsAccountResponseDto);
     }
 
-    @GetMapping("/{accountId}/balance")
-    public ResponseEntity<SavingsAccountResponseDto> getAccountBalance(@PathVariable Long accountId) {
-        // TODO Implementation required
-        return ResponseEntity.ok().body(SavingsAccountResponseDto.builder().build());
+    /**
+     * Gets account balance.
+     *
+     * @param dni the dni
+     * @return the account balance
+     */
+    @GetMapping("/{dni}/balance")
+    public ResponseEntity<SavingsAccountResponseDto> getAccountBalance(@PathVariable String dni) {
+        SavingsAccountResponseDto accountBalance = savingsAccountService.getAccountBalance(dni);
+        return ResponseEntity.ok().body(accountBalance);
     }
 
-    @GetMapping("/{accountId}/transactions")
-    public ResponseEntity<List<TransactionDetailDto>> getAccountTransactionHistory(@PathVariable Long accountId) {
-        // TODO Implementation required
-        return ResponseEntity.ok().body(new ArrayList<>());
+    /**
+     * Gets account transaction history.
+     *
+     * @param dni the dni
+     * @return the account transaction history
+     */
+    @GetMapping("/{dni}/transactions")
+    public ResponseEntity<List<TransactionDetailDto>> getAccountTransactionHistory(@PathVariable String dni) {
+        List<TransactionDetailDto> accountTransactionHistory = savingsAccountService.getAccountTransactionHistory(dni);
+        return ResponseEntity.ok().body(accountTransactionHistory);
     }
 }
