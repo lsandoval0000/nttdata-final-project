@@ -12,4 +12,4 @@ spring:
         git:
           uri: https://github.com/lsandoval0000/nttdata-final-project.git
           search-paths: /config
-          default-label: "main"
+          default-label: "master"
