@@ -1,0 +1,6 @@
+spring:
+  datasource:
+    url: jdbc:tc:postgresql:13.2-alpine://bank-account-savings-service
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
