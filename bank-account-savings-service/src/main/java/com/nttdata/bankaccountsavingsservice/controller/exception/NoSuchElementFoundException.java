@@ -7,9 +7,9 @@ public class NoSuchElementFoundException extends RuntimeException {
     /**
      * Instantiates a new No such element found exception.
      *
-     * @param messsage the messsage
+     * @param message the message
      */
-    public NoSuchElementFoundException(String messsage) {
-        super(messsage);
+    public NoSuchElementFoundException(String message) {
+        super(message);
     }
 }

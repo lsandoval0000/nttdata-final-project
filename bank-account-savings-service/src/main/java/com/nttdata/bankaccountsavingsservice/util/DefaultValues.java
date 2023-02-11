@@ -17,9 +17,9 @@ public final class DefaultValues {
     /**
      * Fee per operation.
      */
-    public static final BigDecimal FEE_PER_OPERATION = BigDecimal.valueOf(0.3D);
+    public static final BigDecimal FEE_PER_OPERATION = BigDecimal.valueOf(4.0D);
 
-    private DefaultValues(){
+    private DefaultValues() {
 
     }
 }

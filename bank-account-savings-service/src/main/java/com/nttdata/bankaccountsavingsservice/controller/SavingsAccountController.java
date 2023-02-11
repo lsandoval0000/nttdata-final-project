@@ -5,9 +5,10 @@ import com.nttdata.bankaccountsavingsservice.dto.deposit.DepositMoneyRequestDto;
 import com.nttdata.bankaccountsavingsservice.dto.newaccount.NewSavingsAccountRequestDto;
 import com.nttdata.bankaccountsavingsservice.dto.SavingsAccountResponseDto;
 import com.nttdata.bankaccountsavingsservice.dto.payment.PaymentInfoDto;
-import com.nttdata.bankaccountsavingsservice.dto.transaction.TransactionDetailDto;
+import com.nttdata.bankaccountsavingsservice.dto.transaction.TransactionDataDto;
 import com.nttdata.bankaccountsavingsservice.dto.withdraw.WithdrawMoneyRequestDto;
 import com.nttdata.bankaccountsavingsservice.service.SavingsAccountService;
+import com.nttdata.bankaccountsavingsservice.service.TransactionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +28,7 @@ import java.util.List;
 public class SavingsAccountController {
 
     private final SavingsAccountService savingsAccountService;
+    private final TransactionService transactionService;
 
     /**
      * New savings account.
@@ -42,7 +44,7 @@ public class SavingsAccountController {
         SavingsAccountResponseDto response = SavingsAccountResponseDto
                 .builder()
                 .savingsAccount(savingsAccountDto)
-                .message("Savings account was successfully created.")
+                .message("La cuenta de ahorro ha sido creada satisfactoriamente.")
                 .build();
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -121,8 +123,13 @@ public class SavingsAccountController {
      * @return the account transaction history
      */
     @GetMapping("/{dni}/transactions")
-    public ResponseEntity<List<TransactionDetailDto>> getAccountTransactionHistory(@PathVariable String dni) {
-        List<TransactionDetailDto> accountTransactionHistory = savingsAccountService.getAccountTransactionHistory(dni);
+    public ResponseEntity<TransactionDataDto> getAccountTransactionHistory(
+            @PathVariable String dni,
+            @RequestParam(defaultValue = "0") Integer page,
+            @RequestParam(defaultValue = "5") Integer pageSize
+    ) {
+        TransactionDataDto accountTransactionHistory =
+                transactionService.getAccountTransactionHistory(dni, page, pageSize);
         return ResponseEntity.ok().body(accountTransactionHistory);
     }
 }

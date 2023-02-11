@@ -19,9 +19,9 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PaymentInfoDto implements Serializable {
-    @NotBlank(message = "Service to pay is required.")
+    @NotBlank(message = "El nombre del servicio a pagar es requerido.")
     private String serviceToPay;
-    @DecimalMin(value = "0.0", inclusive = false, message = "Amount to pay must be grater than 0.")
-    @Digits(integer = 10, fraction = 2, message = "Amount to pay must have two decimals or less.")
+    @DecimalMin(value = "0.0", inclusive = false, message = "El monto debe ser mayor a cero.")
+    @Digits(integer = 10, fraction = 2, message = "El monto debe tener como máximo dos decimales.")
     private BigDecimal amountToPay;
 }

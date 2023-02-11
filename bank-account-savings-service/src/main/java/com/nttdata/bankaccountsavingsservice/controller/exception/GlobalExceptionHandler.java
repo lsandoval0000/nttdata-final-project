@@ -25,7 +25,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             WebRequest request) {
         ErrorResponse errorResponse = new ErrorResponse(
                 HttpStatus.UNPROCESSABLE_ENTITY.value(),
-                "Validation Error. Check 'errors' field for details."
+                "Errores de validación. Revisar el campo 'errors' para ver los detalles."
         );
         methodArgumentNotValidException.
                 getBindingResult().
@@ -49,7 +49,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     /**
-     * Handle no such element found exception response entity.
+     * Handle no such element found exception.
      *
      * @param noSuchElementFoundException the no such element found exception
      * @param webRequest                  the web request
@@ -65,7 +65,55 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     /**
-     * Handle all uncaught exception response entity.
+     * Handle unsupported client type exception.
+     *
+     * @param unsupportedClientTypeException the unsupported client type exception
+     * @param webRequest                     the web request
+     * @return the response entity
+     */
+    @ExceptionHandler(UnsupportedClientTypeException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseEntity<Object> handleUnsupportedClientTypeException(
+            UnsupportedClientTypeException unsupportedClientTypeException,
+            WebRequest webRequest
+    ) {
+        return buildErrorResponse(unsupportedClientTypeException, HttpStatus.BAD_REQUEST, webRequest);
+    }
+
+    /**
+     * Handle max value allowed reached exception.
+     *
+     * @param maxValueAllowedReachedException the max value allowed reached exception
+     * @param webRequest                      the web request
+     * @return the response entity
+     */
+    @ExceptionHandler(MaxValueAllowedReachedException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseEntity<Object> handleMaxValueAllowedReachedException(
+            MaxValueAllowedReachedException maxValueAllowedReachedException,
+            WebRequest webRequest
+    ) {
+        return buildErrorResponse(maxValueAllowedReachedException, HttpStatus.BAD_REQUEST, webRequest);
+    }
+
+    /**
+     * Handle not enough funds exception.
+     *
+     * @param notEnoughFundsException the not enough funds exception
+     * @param webRequest              the web request
+     * @return the response entity
+     */
+    @ExceptionHandler(NotEnoughFundsException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseEntity<Object> handleNotEnoughFundsException(
+            NotEnoughFundsException notEnoughFundsException,
+            WebRequest webRequest
+    ) {
+        return buildErrorResponse(notEnoughFundsException, HttpStatus.BAD_REQUEST, webRequest);
+    }
+
+    /**
+     * Handle all uncaught generic exception.
      *
      * @param exception  the exception
      * @param webRequest the web request
@@ -77,7 +125,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             Exception exception,
             WebRequest webRequest
     ) {
-        return buildErrorResponse(exception, "Unknown error occurred", HttpStatus.INTERNAL_SERVER_ERROR, webRequest);
+        return buildErrorResponse(exception, "Error desconocido ha ocurrido", HttpStatus.INTERNAL_SERVER_ERROR, webRequest);
     }
 
     /**

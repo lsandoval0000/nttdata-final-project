@@ -5,10 +5,7 @@ import com.nttdata.bankaccountsavingsservice.dto.SavingsAccountResponseDto;
 import com.nttdata.bankaccountsavingsservice.dto.deposit.DepositMoneyRequestDto;
 import com.nttdata.bankaccountsavingsservice.dto.newaccount.NewSavingsAccountRequestDto;
 import com.nttdata.bankaccountsavingsservice.dto.payment.PaymentInfoDto;
-import com.nttdata.bankaccountsavingsservice.dto.transaction.TransactionDetailDto;
 import com.nttdata.bankaccountsavingsservice.dto.withdraw.WithdrawMoneyRequestDto;
-
-import java.util.List;
 
 
 /**
@@ -57,12 +54,4 @@ public interface SavingsAccountService {
      * @return the account balance
      */
     SavingsAccountResponseDto getAccountBalance(String dni);
-
-    /**
-     * Gets account transaction history.
-     *
-     * @param dni the dni
-     * @return the account transaction history
-     */
-    List<TransactionDetailDto> getAccountTransactionHistory(String dni);
 }

@@ -6,8 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.time.OffsetDateTime;
+import java.util.List;
 
 /**
  * The transaction detail dto.
@@ -16,8 +15,9 @@ import java.time.OffsetDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class TransactionDetailDto implements Serializable {
-    private OffsetDateTime date;
-    private String operation;
-    private BigDecimal amount;
+public class TransactionDataDto implements Serializable {
+
+    private Long totalElements;
+    private Integer totalPages;
+    List<TransactionDto> transactions;
 }

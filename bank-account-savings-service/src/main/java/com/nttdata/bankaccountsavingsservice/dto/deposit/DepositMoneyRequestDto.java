@@ -18,7 +18,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @Builder
 public class DepositMoneyRequestDto implements Serializable {
-    @DecimalMin(value = "0.0", inclusive = false, message = "Amount must be greater than 0.")
-    @Digits(integer = 10, fraction = 2, message = "Initial amount must have two decimals or less.")
+    @DecimalMin(value = "0.0", inclusive = false, message = "El monto debe ser mayor a cero.")
+    @Digits(integer = 10, fraction = 2, message = "El monto inicial debe tener como máximo dos decimales.")
     private BigDecimal amount;
 }

@@ -19,11 +19,11 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 public class NewSavingsAccountRequestDto implements Serializable {
-    @NotBlank(message = "Dni is required.")
+    @NotBlank(message = "Dni es requerido.")
     private String dni;
-    @NotBlank(message = "Client type is required.")
+    @NotBlank(message = "El tipo de cliente es requerido.")
     private String clientType;
-    @DecimalMin(value = "0.0", message = "Initial amount must be 0 or greater.")
-    @Digits(integer = 10, fraction = 2, message = "Initial amount must have two decimals or less.")
+    @DecimalMin(value = "0.0", message = "El monto inicial debe ser mayor o igual a cero.")
+    @Digits(integer = 10, fraction = 2, message = "El monto inicial debe tener como máximo dos decimales.")
     private BigDecimal initialAmount;
 }

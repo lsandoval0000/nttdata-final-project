@@ -1,4 +1,4 @@
-package bankaccountsavingsservice.controller.validation;
+package com.nttdata.bankaccountsavingsservice.controller.validation;
 
 import com.nttdata.bankaccountsavingsservice.dto.payment.PaymentInfoDto;
 import org.junit.jupiter.api.Test;
