@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: bank-account-savings-service
+  cloud:
+    config:
+      uri: http://localhost:8081
+      username: configserver
+      password: configserver
