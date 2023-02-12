@@ -16,7 +16,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
-import java.util.List;
 
 
 /**
@@ -38,8 +37,7 @@ public class SavingsAccountController {
      */
     @PostMapping
     public ResponseEntity<SavingsAccountResponseDto> newSavingsAccount(
-            @Valid @RequestBody NewSavingsAccountRequestDto newSavingsAccountRequestDto
-    ) {
+            @Valid @RequestBody NewSavingsAccountRequestDto newSavingsAccountRequestDto) {
         SavingsAccountDto savingsAccountDto = savingsAccountService.newSavingsAccount(newSavingsAccountRequestDto);
         SavingsAccountResponseDto response = SavingsAccountResponseDto
                 .builder()
@@ -64,8 +62,7 @@ public class SavingsAccountController {
     @PostMapping("/{dni}/deposit")
     public ResponseEntity<SavingsAccountResponseDto> depositMoneyIntoAccount(
             @PathVariable String dni,
-            @Valid @RequestBody DepositMoneyRequestDto depositMoneyRequestDto
-    ) {
+            @Valid @RequestBody DepositMoneyRequestDto depositMoneyRequestDto) {
         SavingsAccountResponseDto savingsAccountResponseDto =
                 savingsAccountService.depositMoneyIntoAccount(dni, depositMoneyRequestDto);
         return ResponseEntity.ok().body(savingsAccountResponseDto);
@@ -81,8 +78,7 @@ public class SavingsAccountController {
     @PostMapping("/{dni}/withdrawal")
     public ResponseEntity<SavingsAccountResponseDto> withdrawMoneyFromAccount(
             @PathVariable String dni,
-            @Valid @RequestBody WithdrawMoneyRequestDto withdrawMoneyRequestDto
-    ) {
+            @Valid @RequestBody WithdrawMoneyRequestDto withdrawMoneyRequestDto) {
         SavingsAccountResponseDto savingsAccountResponseDto =
                 savingsAccountService.withdrawMoneyFromAccount(dni, withdrawMoneyRequestDto);
         return ResponseEntity.ok().body(savingsAccountResponseDto);
@@ -98,8 +94,7 @@ public class SavingsAccountController {
     @PostMapping("/{dni}/paid")
     public ResponseEntity<SavingsAccountResponseDto> payUsingAccount(
             @PathVariable String dni,
-            @Valid @RequestBody PaymentInfoDto paymentInfo
-    ) {
+            @Valid @RequestBody PaymentInfoDto paymentInfo) {
         SavingsAccountResponseDto savingsAccountResponseDto = savingsAccountService.payUsingAccount(dni, paymentInfo);
         return ResponseEntity.ok().body(savingsAccountResponseDto);
     }
@@ -125,11 +120,10 @@ public class SavingsAccountController {
     @GetMapping("/{dni}/transactions")
     public ResponseEntity<TransactionDataDto> getAccountTransactionHistory(
             @PathVariable String dni,
-            @RequestParam(defaultValue = "0") Integer page,
-            @RequestParam(defaultValue = "5") Integer pageSize
-    ) {
+            @RequestParam(defaultValue = "1", name = "page") Integer page,
+            @RequestParam(defaultValue = "5", name = "page_size") Integer pageSize) {
         TransactionDataDto accountTransactionHistory =
-                transactionService.getAccountTransactionHistory(dni, page, pageSize);
+                transactionService.getAccountTransactionHistory(dni, page - 1, pageSize);
         return ResponseEntity.ok().body(accountTransactionHistory);
     }
 }

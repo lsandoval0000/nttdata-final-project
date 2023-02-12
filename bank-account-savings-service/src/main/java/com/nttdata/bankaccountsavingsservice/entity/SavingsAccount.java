@@ -8,7 +8,9 @@ import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -33,6 +35,7 @@ public class SavingsAccount {
     @CreationTimestamp
     private OffsetDateTime createdAt;
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "savingsAccount")
+    @Column(nullable = true)
     @ToString.Exclude
     private List<Transaction> transactions;
 }

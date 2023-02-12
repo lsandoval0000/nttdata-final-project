@@ -18,6 +18,6 @@ import java.time.OffsetDateTime;
 @Builder
 public class TransactionDto implements Serializable {
     private OffsetDateTime transactionDate;
-    private String transaction;
+    private String description;
     private BigDecimal amount;
 }
