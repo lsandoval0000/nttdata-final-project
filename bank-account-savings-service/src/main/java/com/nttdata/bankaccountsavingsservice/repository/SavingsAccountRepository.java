@@ -19,7 +19,8 @@ public interface SavingsAccountRepository extends JpaRepository<SavingsAccount, 
      * @param dni the dni
      * @return the count
      */
-    Integer countSavingsAccountByDni(String dni);
+    @Query("select count(s) from SavingsAccount s where s.dni = ?1")
+    Long countSavingsAccountByDni(String dni);
 
     /**
      * Find by dni a savings account.

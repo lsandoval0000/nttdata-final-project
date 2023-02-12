@@ -1,9 +1,6 @@
 package com.nttdata.bankaccountsavingsservice.dto.transaction;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.io.Serializable;
 import java.util.List;
@@ -19,5 +16,6 @@ public class TransactionDataDto implements Serializable {
 
     private Long totalElements;
     private Integer totalPages;
-    List<TransactionDto> transactions;
+    @ToString.Exclude
+    private List<TransactionDto> transactions;
 }

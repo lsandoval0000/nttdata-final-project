@@ -7,7 +7,9 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 
-@Data
+@Getter
+@Setter
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -21,7 +23,7 @@ public class Transaction {
     @CreationTimestamp
     private OffsetDateTime transactionDate;
     @Column(nullable = false)
-    private String transaction;
+    private String description;
     @Column(nullable = false)
     private BigDecimal amount;
     @ManyToOne

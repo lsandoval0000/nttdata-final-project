@@ -1,0 +1,247 @@
+{
+	"info": {
+		"_postman_id": "794e584c-ac9b-46bd-8739-8d935fb378a6",
+		"name": "NTT Data Final proyect - Luis Sandoval Microservices",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "7230124"
+	},
+	"item": [
+		{
+			"name": "Bank Account - Savings Account Microservice",
+			"item": [
+				{
+					"name": "Get balance",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}{{base_path}}/47081541/balance",
+							"host": [
+								"{{server}}{{base_path}}"
+							],
+							"path": [
+								"47081541",
+								"balance"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get transactions",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}{{base_path}}/47081541/transactions?page=1&page_size=5",
+							"host": [
+								"{{server}}{{base_path}}"
+							],
+							"path": [
+								"47081541",
+								"transactions"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "page_size",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Savings Account",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"dni\":\"47081541\",\r\n    \"clientType\":\"PERSONAL\",\r\n    \"initialAmount\":1500.34\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}{{base_path}}",
+							"host": [
+								"{{server}}{{base_path}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deposit money",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"amount\": 1500.23\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}{{base_path}}/47081541/deposit",
+							"host": [
+								"{{server}}{{base_path}}"
+							],
+							"path": [
+								"47081541",
+								"deposit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Withdraw money",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"amount\": 343.53\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}{{base_path}}/47081541/withdrawal",
+							"host": [
+								"{{server}}{{base_path}}"
+							],
+							"path": [
+								"47081541",
+								"withdrawal"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pay service",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"serviceToPay\":\"Pago de cuota de crédito solicitado\",\r\n    \"amountToPay\":523.4\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}{{base_path}}/47081541/paid",
+							"host": [
+								"{{server}}{{base_path}}"
+							],
+							"path": [
+								"47081541",
+								"paid"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "oauth2",
+		"oauth2": [
+			{
+				"key": "accessTokenUrl",
+				"value": "http://localhost:8181/realms/nttdata-final-project-realm/protocol/openid-connect/token",
+				"type": "string"
+			},
+			{
+				"key": "clientId",
+				"value": "nttdata-final-project-client",
+				"type": "string"
+			},
+			{
+				"key": "clientSecret",
+				"value": "D4jznEpVbHv0wpFKyHRAhqGiSma7B9Ib",
+				"type": "string"
+			},
+			{
+				"key": "tokenName",
+				"value": "token",
+				"type": "string"
+			},
+			{
+				"key": "challengeAlgorithm",
+				"value": "S256",
+				"type": "string"
+			},
+			{
+				"key": "scope",
+				"value": "openid offline_access",
+				"type": "string"
+			},
+			{
+				"key": "grant_type",
+				"value": "client_credentials",
+				"type": "string"
+			},
+			{
+				"key": "addTokenTo",
+				"value": "header",
+				"type": "string"
+			},
+			{
+				"key": "client_authentication",
+				"value": "header",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "server",
+			"value": "http://localhost:8080",
+			"type": "string"
+		},
+		{
+			"key": "base_path",
+			"value": "/api/bank-account/savings",
+			"type": "string"
+		}
+	]
+}

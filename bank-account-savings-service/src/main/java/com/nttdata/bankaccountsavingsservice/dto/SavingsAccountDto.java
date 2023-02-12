@@ -16,7 +16,6 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SavingsAccountDto implements Serializable {
-    private Long accountId;
     private String accountNumber;
     private BigDecimal balance;
     private Integer monthlyAvailableMovements;
