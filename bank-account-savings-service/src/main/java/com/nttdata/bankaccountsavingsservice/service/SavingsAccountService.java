@@ -1,6 +1,5 @@
 package com.nttdata.bankaccountsavingsservice.service;
 
-import com.nttdata.bankaccountsavingsservice.dto.SavingsAccountDto;
 import com.nttdata.bankaccountsavingsservice.dto.SavingsAccountResponseDto;
 import com.nttdata.bankaccountsavingsservice.dto.deposit.DepositMoneyRequestDto;
 import com.nttdata.bankaccountsavingsservice.dto.newaccount.NewSavingsAccountRequestDto;
@@ -18,7 +17,7 @@ public interface SavingsAccountService {
      * @param newSavingsAccountRequestDto the new savings account request dto
      * @return the savings account dto
      */
-    SavingsAccountDto newSavingsAccount(NewSavingsAccountRequestDto newSavingsAccountRequestDto);
+    SavingsAccountResponseDto newSavingsAccount(NewSavingsAccountRequestDto newSavingsAccountRequestDto);
 
     /**
      * Deposit money into savings account.

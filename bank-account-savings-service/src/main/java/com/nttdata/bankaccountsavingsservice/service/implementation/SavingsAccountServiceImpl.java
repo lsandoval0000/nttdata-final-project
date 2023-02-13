@@ -4,19 +4,18 @@ import com.nttdata.bankaccountsavingsservice.controller.exception.MaxValueAllowe
 import com.nttdata.bankaccountsavingsservice.controller.exception.NoSuchElementFoundException;
 import com.nttdata.bankaccountsavingsservice.controller.exception.NotEnoughFundsException;
 import com.nttdata.bankaccountsavingsservice.controller.exception.UnsupportedClientTypeException;
-import com.nttdata.bankaccountsavingsservice.dto.SavingsAccountDto;
 import com.nttdata.bankaccountsavingsservice.dto.SavingsAccountResponseDto;
 import com.nttdata.bankaccountsavingsservice.dto.deposit.DepositMoneyRequestDto;
 import com.nttdata.bankaccountsavingsservice.dto.mapper.SavingsAccountDtoMapper;
 import com.nttdata.bankaccountsavingsservice.dto.newaccount.NewSavingsAccountRequestDto;
 import com.nttdata.bankaccountsavingsservice.dto.payment.PaymentInfoDto;
 import com.nttdata.bankaccountsavingsservice.dto.withdraw.WithdrawMoneyRequestDto;
-import com.nttdata.bankaccountsavingsservice.entity.Transaction;
 import com.nttdata.bankaccountsavingsservice.entity.SavingsAccount;
-import com.nttdata.bankaccountsavingsservice.repository.TransactionRepository;
+import com.nttdata.bankaccountsavingsservice.entity.Transaction;
 import com.nttdata.bankaccountsavingsservice.repository.SavingsAccountRepository;
+import com.nttdata.bankaccountsavingsservice.repository.TransactionRepository;
 import com.nttdata.bankaccountsavingsservice.service.SavingsAccountService;
-import com.nttdata.bankaccountsavingsservice.service.api.ClientServiceClient;
+import com.nttdata.bankaccountsavingsservice.service.externalapi.ClientServiceClient;
 import com.nttdata.bankaccountsavingsservice.util.AccountNumberGenerator;
 import com.nttdata.bankaccountsavingsservice.util.ClientType;
 import com.nttdata.bankaccountsavingsservice.util.DefaultValues;
@@ -51,7 +50,7 @@ public class SavingsAccountServiceImpl implements SavingsAccountService {
      */
     @Transactional
     @Override
-    public SavingsAccountDto newSavingsAccount(NewSavingsAccountRequestDto newSavingsAccountRequestDto) {
+    public SavingsAccountResponseDto newSavingsAccount(NewSavingsAccountRequestDto newSavingsAccountRequestDto) {
         if (newSavingsAccountRequestDto.getClientType().equals(ClientType.EMPRESARIAL.toString())) {
             throw new UnsupportedClientTypeException(
                     "Los tipos de cliente empresarial no pueden crear cuentas de ahorro."
@@ -83,7 +82,11 @@ public class SavingsAccountServiceImpl implements SavingsAccountService {
                 .build();
         transactionRepository.save(transaction);
 
-        return savingsAccountDtoMapper.convertToDto(savedAccount);
+        return SavingsAccountResponseDto
+                .builder()
+                .savingsAccount(savingsAccountDtoMapper.convertToDto(savedAccount))
+                .message("La cuenta de ahorro ha sido creada satisfactoriamente.")
+                .build();
     }
 
     /**
@@ -109,7 +112,7 @@ public class SavingsAccountServiceImpl implements SavingsAccountService {
         SavingsAccount savedAccount = savingsAccountRepository.save(savingsAccount);
         Transaction transaction = Transaction
                 .builder()
-                .amount(savedAccount.getBalance())
+                .amount(depositMoneyRequestDto.getAmount())
                 .savingsAccount(savedAccount)
                 .description(
                         StrSubstitutor.replace(
@@ -148,17 +151,22 @@ public class SavingsAccountServiceImpl implements SavingsAccountService {
             throw new NoSuchElementFoundException("El cliente no posee una cuenta de ahorros.");
         }
 
-        BigDecimal newBalance = savingsAccount.getBalance().subtract(withdrawMoneyRequestDto.getAmount());
-        Integer transactionsOfCurrentMonth = transactionRepository.countAllTransactionsOfCurrentMonth();
+        BigDecimal newBalance = savingsAccount.getBalance();
+        BigDecimal amountToSubtract = withdrawMoneyRequestDto.getAmount();
+        Integer transactionsOfCurrentMonth = transactionRepository
+                .countAllWithdrawTransactionsOfCurrentMonthBySavingsAccount(savingsAccount.getAccountId());
+        int actualAvailableMonthlyMovements = DefaultValues.MONTHLY_AVAILABLE_MOVEMENTS - transactionsOfCurrentMonth;
 
-        if (savingsAccount.getMonthlyAvailableMovements() - transactionsOfCurrentMonth <= 0) {
-            newBalance = newBalance.subtract(DefaultValues.FEE_PER_OPERATION);
+        if (actualAvailableMonthlyMovements <= 0) {
+            amountToSubtract = amountToSubtract.add(DefaultValues.FEE_PER_OPERATION);
             savingsAccount.setMonthlyAvailableMovements(0);
         } else {
-            savingsAccount.setMonthlyAvailableMovements(savingsAccount.getMonthlyAvailableMovements() - 1);
+            savingsAccount.setMonthlyAvailableMovements(actualAvailableMonthlyMovements - 1);
         }
 
-        if (newBalance.compareTo(BigDecimal.valueOf(0L)) < 0) {
+        newBalance = newBalance.subtract(amountToSubtract);
+
+        if (newBalance.compareTo(BigDecimal.ZERO) < 0) {
             throw new NotEnoughFundsException(
                     "El monto que el cliente desea retirar excede sus ahorros."
                             + (
@@ -175,7 +183,7 @@ public class SavingsAccountServiceImpl implements SavingsAccountService {
         SavingsAccount savedAccount = savingsAccountRepository.save(savingsAccount);
         Transaction transaction = Transaction
                 .builder()
-                .amount(savedAccount.getBalance())
+                .amount(amountToSubtract)
                 .savingsAccount(savedAccount)
                 .description(
                         StrSubstitutor.replace(
@@ -214,7 +222,7 @@ public class SavingsAccountServiceImpl implements SavingsAccountService {
 
         BigDecimal newBalance = savingsAccount.getBalance().subtract(paymentInfo.getAmountToPay());
 
-        if (newBalance.compareTo(BigDecimal.valueOf(0L)) < 0) {
+        if (newBalance.compareTo(BigDecimal.ZERO) < 0) {
             throw new NotEnoughFundsException("El monto que el cliente desea pagar excede sus ahorros.");
         }
 
@@ -222,7 +230,7 @@ public class SavingsAccountServiceImpl implements SavingsAccountService {
         SavingsAccount savedAccount = savingsAccountRepository.save(savingsAccount);
         Transaction transaction = Transaction
                 .builder()
-                .amount(savedAccount.getBalance())
+                .amount(paymentInfo.getAmountToPay())
                 .savingsAccount(savedAccount)
                 .description(
                         StrSubstitutor.replace(

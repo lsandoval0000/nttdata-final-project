@@ -5,6 +5,9 @@ import com.nttdata.bankaccountsavingsservice.entity.SavingsAccount;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 
+/**
+ * The Savings account dto mapper.
+ */
 @Component
 public class SavingsAccountDtoMapper extends BaseMapper<SavingsAccount, SavingsAccountDto> {
     /**

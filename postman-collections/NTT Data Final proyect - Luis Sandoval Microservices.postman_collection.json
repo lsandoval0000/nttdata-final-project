@@ -15,9 +15,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{server}}{{base_path}}/47081541/balance",
+							"raw": "{{server}}{{base_path_bank_account_savings}}/47081541/balance",
 							"host": [
-								"{{server}}{{base_path}}"
+								"{{server}}{{base_path_bank_account_savings}}"
 							],
 							"path": [
 								"47081541",
@@ -33,9 +33,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{server}}{{base_path}}/47081541/transactions?page=1&page_size=5",
+							"raw": "{{server}}{{base_path_bank_account_savings}}/47081541/transactions?page=1&page_size=10",
 							"host": [
-								"{{server}}{{base_path}}"
+								"{{server}}{{base_path_bank_account_savings}}"
 							],
 							"path": [
 								"47081541",
@@ -48,7 +48,7 @@
 								},
 								{
 									"key": "page_size",
-									"value": "5"
+									"value": "10"
 								}
 							]
 						}
@@ -70,9 +70,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{server}}{{base_path}}",
+							"raw": "{{server}}{{base_path_bank_account_savings}}",
 							"host": [
-								"{{server}}{{base_path}}"
+								"{{server}}{{base_path_bank_account_savings}}"
 							]
 						}
 					},
@@ -93,9 +93,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{server}}{{base_path}}/47081541/deposit",
+							"raw": "{{server}}{{base_path_bank_account_savings}}/47081541/deposit",
 							"host": [
-								"{{server}}{{base_path}}"
+								"{{server}}{{base_path_bank_account_savings}}"
 							],
 							"path": [
 								"47081541",
@@ -112,7 +112,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"amount\": 343.53\r\n}",
+							"raw": "{\r\n    \"amount\": 5.00\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -120,9 +120,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{server}}{{base_path}}/47081541/withdrawal",
+							"raw": "{{server}}{{base_path_bank_account_savings}}/47081541/withdrawal",
 							"host": [
-								"{{server}}{{base_path}}"
+								"{{server}}{{base_path_bank_account_savings}}"
 							],
 							"path": [
 								"47081541",
@@ -147,13 +147,114 @@
 							}
 						},
 						"url": {
-							"raw": "{{server}}{{base_path}}/47081541/paid",
+							"raw": "{{server}}{{base_path_bank_account_savings}}/47081541/paid",
 							"host": [
-								"{{server}}{{base_path}}"
+								"{{server}}{{base_path_bank_account_savings}}"
 							],
 							"path": [
 								"47081541",
 								"paid"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Credits - Personal Credit Microservice",
+			"item": [
+				{
+					"name": "Request Credit",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"dni\":\"47081541\",\r\n    \"clientType\":\"PERSONAL\",\r\n    \"creditAmount\":30000.00,\r\n    \"initialDateToPay\":\"2023-02-13\",\r\n    \"monthsToPay\":15,\r\n    \"monthlyFee\":1500,\r\n    \"interestRate\":5.55,\r\n    \"latePaymentInterest\": 0.60\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}{{base_path_credits_personal_credits}}",
+							"host": [
+								"{{server}}{{base_path_credits_personal_credits}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pay credit",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"paymentMethod\":\"CASH\",\r\n    \"amountToPay\": 29800\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}{{base_path_credits_personal_credits}}/47081541/paid",
+							"host": [
+								"{{server}}{{base_path_credits_personal_credits}}"
+							],
+							"path": [
+								"47081541",
+								"paid"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Credit Balance",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}{{base_path_credits_personal_credits}}/47081541/balance",
+							"host": [
+								"{{server}}{{base_path_credits_personal_credits}}"
+							],
+							"path": [
+								"47081541",
+								"balance"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get transactions",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}{{base_path_credits_personal_credits}}/47081541/transactions?page=1&page_size=10",
+							"host": [
+								"{{server}}{{base_path_credits_personal_credits}}"
+							],
+							"path": [
+								"47081541",
+								"transactions"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "page_size",
+									"value": "10"
+								}
 							]
 						}
 					},
@@ -239,8 +340,13 @@
 			"type": "string"
 		},
 		{
-			"key": "base_path",
+			"key": "base_path_bank_account_savings",
 			"value": "/api/bank-account/savings",
+			"type": "string"
+		},
+		{
+			"key": "base_path_credits_personal_credits",
+			"value": "/api/credits/personal",
 			"type": "string"
 		}
 	]

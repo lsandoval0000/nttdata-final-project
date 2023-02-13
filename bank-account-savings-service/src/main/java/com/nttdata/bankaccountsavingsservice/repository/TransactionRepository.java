@@ -29,6 +29,7 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
      */
     @Query("select count(t) " +
             "from Transaction t " +
-            "where year(t.transactionDate) = year(current_date) and  month(t.transactionDate) = month(current_date)")
-    Integer countAllTransactionsOfCurrentMonth();
+            "where year(t.transactionDate) = year(current_date) and  month(t.transactionDate) = month(current_date)" +
+            " and t.description like '%retira%' and t.savingsAccount.accountId = ?1")
+    Integer countAllWithdrawTransactionsOfCurrentMonthBySavingsAccount(Long accountId);
 }

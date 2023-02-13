@@ -2,8 +2,6 @@ package com.nttdata.bankaccountsavingsservice.service;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class SavingsAccountServiceTest {
     // TODO implement test
     @Test
