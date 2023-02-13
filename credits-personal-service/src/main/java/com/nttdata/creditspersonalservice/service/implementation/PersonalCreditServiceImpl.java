@@ -116,7 +116,7 @@ public class PersonalCreditServiceImpl implements PersonalCreditService {
                 .build();
     }
 
-    private static String calculatePayment(
+    private String calculatePayment(
             PaymentInfoDto paymentInfo,
             Transaction transaction,
             PersonalCredit personalCredit) {
