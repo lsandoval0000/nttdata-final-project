@@ -5,6 +5,9 @@ import com.nttdata.bankaccountsavingsservice.entity.Transaction;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 
+/**
+ * The transaction dto mapper.
+ */
 @Component
 public class TransactionDtoMapper extends BaseMapper<Transaction, TransactionDto> {
     /**

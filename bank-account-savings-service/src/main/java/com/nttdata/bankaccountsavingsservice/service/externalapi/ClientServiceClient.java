@@ -1,4 +1,4 @@
-package com.nttdata.bankaccountsavingsservice.service.api;
+package com.nttdata.bankaccountsavingsservice.service.externalapi;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;

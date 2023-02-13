@@ -1,9 +1,8 @@
 package com.nttdata.bankaccountsavingsservice.controller;
 
-import com.nttdata.bankaccountsavingsservice.dto.SavingsAccountDto;
+import com.nttdata.bankaccountsavingsservice.dto.SavingsAccountResponseDto;
 import com.nttdata.bankaccountsavingsservice.dto.deposit.DepositMoneyRequestDto;
 import com.nttdata.bankaccountsavingsservice.dto.newaccount.NewSavingsAccountRequestDto;
-import com.nttdata.bankaccountsavingsservice.dto.SavingsAccountResponseDto;
 import com.nttdata.bankaccountsavingsservice.dto.payment.PaymentInfoDto;
 import com.nttdata.bankaccountsavingsservice.dto.transaction.TransactionDataDto;
 import com.nttdata.bankaccountsavingsservice.dto.withdraw.WithdrawMoneyRequestDto;
@@ -38,18 +37,13 @@ public class SavingsAccountController {
     @PostMapping
     public ResponseEntity<SavingsAccountResponseDto> newSavingsAccount(
             @Valid @RequestBody NewSavingsAccountRequestDto newSavingsAccountRequestDto) {
-        SavingsAccountDto savingsAccountDto = savingsAccountService.newSavingsAccount(newSavingsAccountRequestDto);
-        SavingsAccountResponseDto response = SavingsAccountResponseDto
-                .builder()
-                .savingsAccount(savingsAccountDto)
-                .message("La cuenta de ahorro ha sido creada satisfactoriamente.")
-                .build();
+        SavingsAccountResponseDto savingsAccount = savingsAccountService.newSavingsAccount(newSavingsAccountRequestDto);
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{dni}/balance")
                 .buildAndExpand(newSavingsAccountRequestDto.getDni())
                 .toUri();
-        return ResponseEntity.created(uri).body(response);
+        return ResponseEntity.created(uri).body(savingsAccount);
     }
 
     /**
@@ -63,9 +57,9 @@ public class SavingsAccountController {
     public ResponseEntity<SavingsAccountResponseDto> depositMoneyIntoAccount(
             @PathVariable String dni,
             @Valid @RequestBody DepositMoneyRequestDto depositMoneyRequestDto) {
-        SavingsAccountResponseDto savingsAccountResponseDto =
+        SavingsAccountResponseDto savingsAccount =
                 savingsAccountService.depositMoneyIntoAccount(dni, depositMoneyRequestDto);
-        return ResponseEntity.ok().body(savingsAccountResponseDto);
+        return ResponseEntity.ok().body(savingsAccount);
     }
 
     /**
@@ -79,9 +73,9 @@ public class SavingsAccountController {
     public ResponseEntity<SavingsAccountResponseDto> withdrawMoneyFromAccount(
             @PathVariable String dni,
             @Valid @RequestBody WithdrawMoneyRequestDto withdrawMoneyRequestDto) {
-        SavingsAccountResponseDto savingsAccountResponseDto =
+        SavingsAccountResponseDto savingsAccount =
                 savingsAccountService.withdrawMoneyFromAccount(dni, withdrawMoneyRequestDto);
-        return ResponseEntity.ok().body(savingsAccountResponseDto);
+        return ResponseEntity.ok().body(savingsAccount);
     }
 
     /**
@@ -95,8 +89,8 @@ public class SavingsAccountController {
     public ResponseEntity<SavingsAccountResponseDto> payUsingAccount(
             @PathVariable String dni,
             @Valid @RequestBody PaymentInfoDto paymentInfo) {
-        SavingsAccountResponseDto savingsAccountResponseDto = savingsAccountService.payUsingAccount(dni, paymentInfo);
-        return ResponseEntity.ok().body(savingsAccountResponseDto);
+        SavingsAccountResponseDto savingsAccount = savingsAccountService.payUsingAccount(dni, paymentInfo);
+        return ResponseEntity.ok().body(savingsAccount);
     }
 
     /**
