@@ -76,7 +76,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
      * @return the response entity
      */
     @ExceptionHandler(UnsupportedClientTypeException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<Object> handleUnsupportedClientTypeException(
             UnsupportedClientTypeException unsupportedClientTypeException,
             WebRequest webRequest) {
@@ -92,7 +92,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
      * @return the response entity
      */
     @ExceptionHandler(MaxValueAllowedReachedException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<Object> handleMaxValueAllowedReachedException(
             MaxValueAllowedReachedException maxValueAllowedReachedException,
             WebRequest webRequest) {
@@ -108,7 +108,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
      * @return the response entity
      */
     @ExceptionHandler(NotEnoughFundsException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<Object> handleNotEnoughFundsException(
             NotEnoughFundsException notEnoughFundsException,
             WebRequest webRequest) {
@@ -124,7 +124,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
      * @return the response entity
      */
     @ExceptionHandler(InvalidValueProvidedException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<Object> handleInvalidValueProvidedException(
             InvalidValueProvidedException invalidValueProvidedException,
             WebRequest webRequest) {
@@ -140,7 +140,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
      * @return the response entity
      */
     @ExceptionHandler(BankAccountSavingsAccountServiceException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<Object> handleBankAccountSavingsAccountServiceException(
             BankAccountSavingsAccountServiceException bankAccountSavingsAccountServiceException,
             WebRequest webRequest) {
