@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:tc:mysql:5.7.34://bank-account-savings-service
+    url: jdbc:tc:mysql:5.7.34://credits-personal-service
   jpa:
     hibernate:
       ddl-auto: create-drop
