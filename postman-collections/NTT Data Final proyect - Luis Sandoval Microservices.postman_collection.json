@@ -147,13 +147,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{server}}{{base_path_bank_account_savings}}/47081541/paid",
+							"raw": "{{server}}{{base_path_bank_account_savings}}/47081541/payment",
 							"host": [
 								"{{server}}{{base_path_bank_account_savings}}"
 							],
 							"path": [
 								"47081541",
-								"paid"
+								"payment"
 							]
 						}
 					},
