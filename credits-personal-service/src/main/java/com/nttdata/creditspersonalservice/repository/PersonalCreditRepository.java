@@ -22,15 +22,6 @@ public interface PersonalCreditRepository extends JpaRepository<PersonalCredit, 
     Optional<PersonalCredit> findActiveCreditByDni(String dni);
 
     /**
-     * Gets personal credit id by dni.
-     *
-     * @param dni the dni
-     * @return the personal credit id by dni
-     */
-    @Query("select p.creditId from PersonalCredit p where p.dni = ?1 and p.isActive = true")
-    Long getPersonalCreditIdByDni(String dni);
-
-    /**
      * Count active personal credit by dni.
      *
      * @param dni the dni

@@ -24,6 +24,6 @@ public class NewSavingsAccountRequestDto implements Serializable {
     @NotBlank(message = "El tipo de cliente es requerido.")
     private String clientType;
     @DecimalMin(value = "0.0", message = "El monto inicial debe ser mayor o igual a cero.")
-    @Digits(integer = 10, fraction = 2, message = "El monto inicial debe tener como máximo dos decimales.")
+    @Digits(integer = 15, fraction = 2, message = "El monto inicial debe tener como máximo dos decimales.")
     private BigDecimal initialAmount;
 }

@@ -21,6 +21,8 @@ public class NewPersonalCreditRequestDtoMapper extends BaseMapper<PersonalCredit
         if (dto != null) {
             BeanUtils.copyProperties(dto, entity);
         }
+        entity.setIsActive(true);
+        entity.setAmountLeft(entity.getCreditAmount());
         return entity;
     }
 

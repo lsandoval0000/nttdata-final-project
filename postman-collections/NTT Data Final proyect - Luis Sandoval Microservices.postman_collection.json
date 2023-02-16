@@ -62,7 +62,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"dni\":\"47081541\",\r\n    \"clientType\":\"PERSONAL\",\r\n    \"initialAmount\":1500.34\r\n}",
+							"raw": "{\r\n    \"dni\":\"47081541\",\r\n    \"clientType\":\"PERSONAL\",\r\n    \"initialAmount\":25000.34\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -171,7 +171,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"dni\":\"47081541\",\r\n    \"clientType\":\"PERSONAL\",\r\n    \"creditAmount\":30000.00,\r\n    \"initialDateToPay\":\"2023-02-13\",\r\n    \"monthsToPay\":15,\r\n    \"monthlyFee\":1500,\r\n    \"interestRate\":5.55,\r\n    \"latePaymentInterest\": 0.60\r\n}",
+							"raw": "{\r\n    \"dni\":\"47081541\",\r\n    \"clientType\":\"PERSONAL\",\r\n    \"creditAmount\":30000.00,\r\n    \"initialDateToPay\":\"2023-02-24\",\r\n    \"monthsToPay\":15,\r\n    \"monthlyFee\":1500,\r\n    \"interestRate\":5.55,\r\n    \"latePaymentInterest\": 0.60\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -194,7 +194,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"paymentMethod\":\"CASH\",\r\n    \"amountToPay\": 29800\r\n}",
+							"raw": "{\r\n    \"paymentMethod\":\"SAVINGS_ACCOUNT\",\r\n    \"amountToPay\": 2000\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"

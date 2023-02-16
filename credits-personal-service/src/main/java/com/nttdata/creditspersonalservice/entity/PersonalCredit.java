@@ -24,19 +24,19 @@ public class PersonalCredit {
     private Long creditId;
     @Column(nullable = false, length = 8)
     private String dni;
-    @Column(nullable = false, name = "credit_amount")
+    @Column(nullable = false, name = "credit_amount", precision = 15, scale = 2)
     private BigDecimal creditAmount;
-    @Column(nullable = false, name = "amount_left")
+    @Column(nullable = false, name = "amount_left", precision = 15, scale = 2)
     private BigDecimal amountLeft;
     @Column(nullable = false, name = "initial_date_to_pay")
     private Date initialDateToPay;
     @Column(nullable = false, name = "months_to_pay")
     private Integer monthsToPay;
-    @Column(nullable = false, name = "monthly_fee")
+    @Column(nullable = false, name = "monthly_fee", precision = 15, scale = 2)
     private BigDecimal monthlyFee;
-    @Column(nullable = false, name = "interest_rate")
+    @Column(nullable = false, name = "interest_rate", precision = 15, scale = 2)
     private BigDecimal interestRate;
-    @Column(nullable = false, name = "late_payment_interest")
+    @Column(nullable = false, name = "late_payment_interest", precision = 15, scale = 2)
     private BigDecimal latePaymentInterest;
     @Column(nullable = false, name = "registered_at", updatable = false)
     @CreationTimestamp

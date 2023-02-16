@@ -25,11 +25,11 @@ public class SavingsAccount {
     private String accountNumber;
     @Column(nullable = false, length = 8)
     private String dni;
-    @Column(nullable = false)
+    @Column(nullable = false, precision = 15, scale = 2)
     private BigDecimal balance;
     @Column(nullable = false, name = "monthly_available_movements")
     private Integer monthlyAvailableMovements;
-    @Column(nullable = false, name = "maintenance_fee")
+    @Column(nullable = false, name = "maintenance_fee", precision = 15, scale = 2)
     private BigDecimal maintenanceFee;
     @Column(nullable = false, name = "created_at", updatable = false)
     @CreationTimestamp

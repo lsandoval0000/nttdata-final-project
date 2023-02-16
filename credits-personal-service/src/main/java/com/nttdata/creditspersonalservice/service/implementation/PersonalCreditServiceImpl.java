@@ -13,6 +13,7 @@ import com.nttdata.creditspersonalservice.repository.TransactionRepository;
 import com.nttdata.creditspersonalservice.service.PersonalCreditService;
 import com.nttdata.creditspersonalservice.service.externalapi.BankAccountSavingsAccountServiceClient;
 import com.nttdata.creditspersonalservice.service.externalapi.dto.SavingsAccountPaymentInfoDto;
+import com.nttdata.creditspersonalservice.service.externalapi.dto.SavingsAccountResponseDto;
 import com.nttdata.creditspersonalservice.util.*;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang.text.StrSubstitutor;
@@ -65,8 +66,6 @@ public class PersonalCreditServiceImpl implements PersonalCreditService {
         }
 
         PersonalCredit personalCredit = newPersonalCreditRequestDtoMapper.convertToEntity(newPersonalCreditRequestDto);
-        personalCredit.setAmountLeft(personalCredit.getCreditAmount());
-        personalCredit.setIsActive(true);
         personalCredit = personalCreditRepository.save(personalCredit);
         Transaction transaction = Transaction
                 .builder()
@@ -128,7 +127,7 @@ public class PersonalCreditServiceImpl implements PersonalCreditService {
         if (currentDate.getDayOfMonth() > payDay.getDayOfMonth()) {
             amountForLatePayment = personalCredit
                     .getMonthlyFee()
-                    .multiply(personalCredit.getLatePaymentInterest());
+                    .multiply(personalCredit.getLatePaymentInterest().divide(BigDecimal.valueOf(100L)));
             personalCredit.setAmountLeft(personalCredit
                     .getAmountLeft()
                     .add(amountForLatePayment));

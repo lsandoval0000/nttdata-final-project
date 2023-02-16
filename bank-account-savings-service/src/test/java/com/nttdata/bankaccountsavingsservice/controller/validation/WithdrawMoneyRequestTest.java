@@ -1,6 +1,7 @@
 package com.nttdata.bankaccountsavingsservice.controller.validation;
 
 import com.nttdata.bankaccountsavingsservice.dto.withdraw.WithdrawMoneyRequestDto;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import javax.validation.ConstraintViolation;
@@ -11,11 +12,12 @@ import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class WithdrawMoneyRequestTest {
+class WithdrawMoneyRequestTest {
     private final Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 
     @Test
-    void amountMustNotBeNullAndGreaterThanZero() {
+    @DisplayName("El monto de retiro debe ser mayor a cero")
+    void amountMustBeGreaterThanZero() {
         WithdrawMoneyRequestDto request = WithdrawMoneyRequestDto
                 .builder()
                 .amount(BigDecimal.valueOf(-2L))

@@ -1,6 +1,10 @@
 spring:
   datasource:
-    url: jdbc:tc:mysql:5.7.34://credits-personal-service
+    url: jdbc:tc:mysql:5.7.34://localhost/credits-personal-service
   jpa:
     hibernate:
       ddl-auto: create-drop
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka:password@localhost:8761/eureka
