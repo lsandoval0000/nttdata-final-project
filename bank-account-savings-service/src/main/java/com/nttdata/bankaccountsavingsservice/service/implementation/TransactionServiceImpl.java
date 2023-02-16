@@ -35,7 +35,7 @@ public class TransactionServiceImpl implements TransactionService {
      */
     @Override
     public TransactionDataDto getAccountTransactionHistory(String dni, Integer page, Integer pageSize) {
-        SavingsAccount savingsAccount = savingsAccountRepository.findByDni(dni).orElse(null);
+        SavingsAccount savingsAccount = savingsAccountRepository.findSavingsAccountByDni(dni).orElse(null);
 
         if (savingsAccount == null) {
             throw new NoSuchElementFoundException("El cliente no posee una cuenta de ahorros.");

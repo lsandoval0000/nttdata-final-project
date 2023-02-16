@@ -1,6 +1,7 @@
 package com.nttdata.bankaccountsavingsservice.controller.validation;
 
 import com.nttdata.bankaccountsavingsservice.dto.newaccount.NewSavingsAccountRequestDto;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import javax.validation.ConstraintViolation;
@@ -11,10 +12,11 @@ import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class NewSavingsAccountRequestTest {
+class NewSavingsAccountRequestTest {
     private final Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 
     @Test
+    @DisplayName("El dni no debe ser nulo")
     void dniMustNotBeNull() {
         NewSavingsAccountRequestDto request = NewSavingsAccountRequestDto
                 .builder()
@@ -28,6 +30,7 @@ public class NewSavingsAccountRequestTest {
     }
 
     @Test
+    @DisplayName("El tipo de cliente no debe ser nulo")
     void clientTypeMustNotBeNull() {
         NewSavingsAccountRequestDto request = NewSavingsAccountRequestDto
                 .builder()
@@ -41,6 +44,7 @@ public class NewSavingsAccountRequestTest {
     }
 
     @Test
+    @DisplayName("El monto inicial debe ser mayor o igual a cero")
     void initialAmountMustNotBeNullAndGreaterThanZero() {
         NewSavingsAccountRequestDto request = NewSavingsAccountRequestDto
                 .builder()

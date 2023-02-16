@@ -24,7 +24,7 @@ public class Transaction {
     private OffsetDateTime transactionDate;
     @Column(nullable = false)
     private String description;
-    @Column(nullable = false)
+    @Column(nullable = false, precision = 15, scale = 2)
     private BigDecimal amount;
     @ManyToOne
     @JoinColumn(name = "credit_id", nullable = false)

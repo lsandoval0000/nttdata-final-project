@@ -1,6 +1,6 @@
-package com.nttdata.bankaccountsavingsservice.controller.validation;
+package com.nttdata.creditspersonalservice.controller.validation;
 
-import com.nttdata.bankaccountsavingsservice.dto.payment.PaymentInfoDto;
+import com.nttdata.creditspersonalservice.dto.payment.PaymentInfoDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +17,7 @@ class PaymentInfoTest {
 
     @Test
     @DisplayName("El servicio a pagar no debe ser nulo")
-    void serviceToPayMustNotBeNull() {
+    void paymentMethodMustNotBeNull() {
         PaymentInfoDto request = PaymentInfoDto
                 .builder()
                 .amountToPay(BigDecimal.valueOf(0L))
@@ -29,11 +29,11 @@ class PaymentInfoTest {
     }
 
     @Test
-    @DisplayName("El monto inicial debe ser mayor a cero")
-    void initialAmountMustBeGreaterThanZero() {
+    @DisplayName("El monto a pagar debe ser mayor a cero")
+    void amountToPayMustBeGreaterThanZero() {
         PaymentInfoDto request = PaymentInfoDto
                 .builder()
-                .serviceToPay("TEST")
+                .paymentMethod("TEST")
                 .amountToPay(BigDecimal.valueOf(-2.32D))
                 .build();
 

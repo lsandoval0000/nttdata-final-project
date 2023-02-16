@@ -19,9 +19,7 @@ public class AccountNumberGenerator {
      */
     public static String generateAccountNumber() {
         StringBuilder number = new StringBuilder("TE");
-
         final int howManyMore = 14;
-
 
         for (int i = 0; i < howManyMore; i++) {
             number.append(Integer.valueOf(random.nextInt(9)));

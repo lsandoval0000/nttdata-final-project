@@ -15,7 +15,6 @@ import com.nttdata.bankaccountsavingsservice.entity.Transaction;
 import com.nttdata.bankaccountsavingsservice.repository.SavingsAccountRepository;
 import com.nttdata.bankaccountsavingsservice.repository.TransactionRepository;
 import com.nttdata.bankaccountsavingsservice.service.SavingsAccountService;
-import com.nttdata.bankaccountsavingsservice.service.externalapi.ClientServiceClient;
 import com.nttdata.bankaccountsavingsservice.util.AccountNumberGenerator;
 import com.nttdata.bankaccountsavingsservice.util.ClientType;
 import com.nttdata.bankaccountsavingsservice.util.DefaultValues;
@@ -39,7 +38,6 @@ public class SavingsAccountServiceImpl implements SavingsAccountService {
 
     private final SavingsAccountRepository savingsAccountRepository;
     private final TransactionRepository transactionRepository;
-    private final ClientServiceClient clientServiceClient;
     private final SavingsAccountDtoMapper savingsAccountDtoMapper;
 
     /**
@@ -56,10 +54,6 @@ public class SavingsAccountServiceImpl implements SavingsAccountService {
                     "Los tipos de cliente empresarial no pueden crear cuentas de ahorro."
             );
         }
-
-//        if (!clientServiceClient.clientExists(newSavingsAccountRequestDto.getDni())) {
-//            throw new NoSuchElementFoundException("El cliente no existe.");
-//        }
 
         if (savingsAccountRepository.countSavingsAccountByDni(newSavingsAccountRequestDto.getDni()) > 0) {
             throw new MaxValueAllowedReachedException("Solo se puede poseer una cuenta por cliente como máximo.");
@@ -101,7 +95,7 @@ public class SavingsAccountServiceImpl implements SavingsAccountService {
     public SavingsAccountResponseDto depositMoneyIntoAccount(
             String dni,
             DepositMoneyRequestDto depositMoneyRequestDto) {
-        SavingsAccount savingsAccount = savingsAccountRepository.findByDni(dni).orElse(null);
+        SavingsAccount savingsAccount = savingsAccountRepository.findSavingsAccountByDni(dni).orElse(null);
 
         if (savingsAccount == null) {
             throw new NoSuchElementFoundException("El cliente no posee una cuenta de ahorros.");
@@ -145,7 +139,7 @@ public class SavingsAccountServiceImpl implements SavingsAccountService {
     public SavingsAccountResponseDto withdrawMoneyFromAccount(
             String dni,
             WithdrawMoneyRequestDto withdrawMoneyRequestDto) {
-        SavingsAccount savingsAccount = savingsAccountRepository.findByDni(dni).orElse(null);
+        SavingsAccount savingsAccount = savingsAccountRepository.findSavingsAccountByDni(dni).orElse(null);
 
         if (savingsAccount == null) {
             throw new NoSuchElementFoundException("El cliente no posee una cuenta de ahorros.");
@@ -214,7 +208,7 @@ public class SavingsAccountServiceImpl implements SavingsAccountService {
     @Transactional
     @Override
     public SavingsAccountResponseDto payUsingAccount(String dni, PaymentInfoDto paymentInfo) {
-        SavingsAccount savingsAccount = savingsAccountRepository.findByDni(dni).orElse(null);
+        SavingsAccount savingsAccount = savingsAccountRepository.findSavingsAccountByDni(dni).orElse(null);
 
         if (savingsAccount == null) {
             throw new NoSuchElementFoundException("El cliente no posee una cuenta de ahorros.");
@@ -261,7 +255,7 @@ public class SavingsAccountServiceImpl implements SavingsAccountService {
      */
     @Override
     public SavingsAccountResponseDto getAccountBalance(String dni) {
-        SavingsAccount savingsAccount = savingsAccountRepository.findByDni(dni).orElse(null);
+        SavingsAccount savingsAccount = savingsAccountRepository.findSavingsAccountByDni(dni).orElse(null);
         if (savingsAccount == null) {
             throw new NoSuchElementFoundException("El cliente no posee una cuenta de ahorros.");
         }

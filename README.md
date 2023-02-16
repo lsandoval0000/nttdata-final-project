@@ -3,21 +3,21 @@
 Se definieron los siguientes microservicios:
 
 -	1: Clientes
--	2: Ahorro
+-	2: Cuentas de Ahorro
 -	3: Cuenta Corriente
--	4: Plazo Fijo
--	2: Personal
--	3: Empresarial
+-	4: Cuentas Plazo Fijo
+-	2: Crédito Personal
+-	3: Crédito Empresarial
 -	4: Tarjeta de Crédito
 
 Y se definió bajo sorteo los responsables de cada uno (según el número que aparece al costado del microservicio).
 
 Definiéndose lo siguiente:
 
--	Wilder Castro Apaza (4) -> Plazo Fijo y Tarjeta de Credito
+-	Wilder Castro Apaza (4) -> Cuentas Plazo Fijo y Tarjeta de Crédito
 -	Danner Rebaza Rodríguez (1) -> Clientes
--	Jhonston Vigo Salinas (3) -> Cuenta Corriente y Empresarial
--	Luis Sandoval Arévalo (2) -> Ahorro y Personal
+-	Jhonston Vigo Salinas (3) -> Cuenta Corriente y Crédito Empresarial
+-	Luis Sandoval Arévalo (2) -> Cuentas de Ahorro y Crédito Personal
 
 # Docker
 

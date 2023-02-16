@@ -23,12 +23,12 @@ public interface SavingsAccountRepository extends JpaRepository<SavingsAccount, 
     Long countSavingsAccountByDni(String dni);
 
     /**
-     * Find by dni a savings account.
+     * Find a savings account by dni.
      *
      * @param dni the dni
      * @return the savings account
      */
-    Optional<SavingsAccount> findByDni(String dni);
+    Optional<SavingsAccount> findSavingsAccountByDni(String dni);
 
     /**
      * Gets account id by dni.

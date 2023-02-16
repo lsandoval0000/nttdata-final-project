@@ -46,9 +46,8 @@ public class TransactionServiceImpl implements TransactionService {
                     "El valor del parámetro page y pageSize deben ser enteros positivos");
         }
 
-        Long personalCreditId = personalCreditRepository.getPersonalCreditIdByDni(personalCredit.getDni());
         Page<Transaction> transactions = transactionRepository
-                .findAllByPersonalCreditId(personalCreditId, PageRequest.of(page, pageSize));
+                .findAllByPersonalCreditId(personalCredit.getCreditId(), PageRequest.of(page, pageSize));
 
         return TransactionDataDto
                 .builder()

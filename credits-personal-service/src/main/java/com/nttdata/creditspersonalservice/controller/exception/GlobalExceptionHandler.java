@@ -101,22 +101,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     /**
-     * Handle not enough funds exception.
-     *
-     * @param notEnoughFundsException the not enough funds exception
-     * @param webRequest              the web request
-     * @return the response entity
-     */
-    @ExceptionHandler(NotEnoughFundsException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<Object> handleNotEnoughFundsException(
-            NotEnoughFundsException notEnoughFundsException,
-            WebRequest webRequest) {
-        notEnoughFundsException.printStackTrace();
-        return buildErrorResponse(notEnoughFundsException, HttpStatus.BAD_REQUEST, webRequest);
-    }
-
-    /**
      * Handle invalid value provided exception.
      *
      * @param invalidValueProvidedException the invalid value provided exception
