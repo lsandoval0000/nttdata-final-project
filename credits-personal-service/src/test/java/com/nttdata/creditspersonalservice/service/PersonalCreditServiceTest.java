@@ -46,7 +46,7 @@ class PersonalCreditServiceTest {
     private TransactionRepository transactionRepository;
     @Mock
     private PersonalCreditRepository personalCreditRepository;
-    private PersonalCreditServiceImpl underTest;
+    private PersonalCreditService underTest;
 
     @BeforeEach
     void setup() {

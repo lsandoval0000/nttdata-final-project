@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 @FeignClient(name = "bank-account-savings-service", configuration = {BankAccountSavingsAccountServiceErrorDecoder.class})
 public interface BankAccountSavingsAccountServiceClient {
 
-    @PostMapping(value = "/api/bank-account/savings/{dni}/paid")
+    @PostMapping(value = "/api/bank-account/savings/{dni}/payment")
     SavingsAccountResponseDto payUsingAccount(
             @PathVariable String dni,
             @RequestBody SavingsAccountPaymentInfoDto paymentInfo);

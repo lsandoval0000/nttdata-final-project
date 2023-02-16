@@ -1,14 +1,14 @@
-package com.nttdata.creditspersonalservice.service;
+package com.nttdata.bankaccountsavingsservice.service;
 
-import com.nttdata.creditspersonalservice.controller.exception.InvalidValueProvidedException;
-import com.nttdata.creditspersonalservice.controller.exception.NoSuchElementFoundException;
-import com.nttdata.creditspersonalservice.dto.mapper.TransactionDtoMapper;
-import com.nttdata.creditspersonalservice.dto.transaction.TransactionDataDto;
-import com.nttdata.creditspersonalservice.entity.PersonalCredit;
-import com.nttdata.creditspersonalservice.entity.Transaction;
-import com.nttdata.creditspersonalservice.repository.PersonalCreditRepository;
-import com.nttdata.creditspersonalservice.repository.TransactionRepository;
-import com.nttdata.creditspersonalservice.service.implementation.TransactionServiceImpl;
+import com.nttdata.bankaccountsavingsservice.controller.exception.InvalidValueProvidedException;
+import com.nttdata.bankaccountsavingsservice.controller.exception.NoSuchElementFoundException;
+import com.nttdata.bankaccountsavingsservice.dto.mapper.TransactionDtoMapper;
+import com.nttdata.bankaccountsavingsservice.dto.transaction.TransactionDataDto;
+import com.nttdata.bankaccountsavingsservice.entity.SavingsAccount;
+import com.nttdata.bankaccountsavingsservice.entity.Transaction;
+import com.nttdata.bankaccountsavingsservice.repository.SavingsAccountRepository;
+import com.nttdata.bankaccountsavingsservice.repository.TransactionRepository;
+import com.nttdata.bankaccountsavingsservice.service.implementation.TransactionServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -30,11 +30,10 @@ import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 class TransactionServiceTest {
-
+    @Mock
+    private SavingsAccountRepository savingsAccountRepository;
     @Mock
     private TransactionRepository transactionRepository;
-    @Mock
-    private PersonalCreditRepository personalCreditRepository;
     private TransactionDtoMapper transactionDtoMapper;
     private TransactionService underTest;
 
@@ -42,18 +41,18 @@ class TransactionServiceTest {
     void setup() {
         transactionDtoMapper = new TransactionDtoMapper();
         underTest = new TransactionServiceImpl(
+                savingsAccountRepository,
                 transactionRepository,
-                personalCreditRepository,
                 transactionDtoMapper);
     }
 
     @Test
-    @DisplayName("Debe retornar el historial de las transacciones del crédito según el dni" +
+    @DisplayName("Debe retornar el historial de las transacciones de la cuenta de ahorro según el dni" +
             " y los valores de paginación")
-    void shouldReturnCreditTransactionHistoryByDniAndPaginationValues() {
+    void shouldReturnAccountTransactionHistoryByDniAndPaginationValues() {
         String dni = "47081541";
         PageRequest pageRequest = PageRequest.of(0, 5);
-        PersonalCredit personalCredit = PersonalCredit.builder().build();
+        SavingsAccount savingsAccount = SavingsAccount.builder().build();
         List<Transaction> transactionEntityList = List.of(
                 Transaction.builder().build(),
                 Transaction.builder().build(),
@@ -63,12 +62,12 @@ class TransactionServiceTest {
         );
         Page<Transaction> transactionEntityPage = new PageImpl<>(transactionEntityList);
 
-        given(personalCreditRepository.findActiveCreditByDni(dni)).willReturn(Optional.of(personalCredit));
-        given(transactionRepository.findAllByPersonalCreditId(personalCredit.getCreditId(), pageRequest))
+        given(savingsAccountRepository.findSavingsAccountByDni(dni)).willReturn(Optional.of(savingsAccount));
+        given(transactionRepository.findAllBySavingsAccount(any(), any()))
                 .willReturn(transactionEntityPage);
 
         TransactionDataDto returnedValue = underTest
-                .getCreditTransactionHistory(dni, pageRequest.getPageNumber(), pageRequest.getPageSize());
+                .getAccountTransactionHistory(dni, pageRequest.getPageNumber(), pageRequest.getPageSize());
 
         assertEquals(transactionEntityPage.getContent().size(), returnedValue.getTransactions().size());
         assertEquals(transactionEntityPage.getTotalPages(), returnedValue.getTotalPages());
@@ -76,15 +75,15 @@ class TransactionServiceTest {
     }
 
     @Test
-    @DisplayName("Debe generar la excepción NoSuchElementFoundException cuando el cliente no posee un crédito activo")
-    void shouldRaiseNoSuchElementFoundExceptionWhenClientDoesNotHaveActiveCredit() {
+    @DisplayName("Debe generar la excepción NoSuchElementFoundException cuando el cliente no posee uan cuenta de ahorro")
+    void shouldRaiseNoSuchElementFoundExceptionWhenClientDoesNotHaveSavingsAccount() {
         String dni = "47081541";
 
-        given(personalCreditRepository.findActiveCreditByDni(dni)).willReturn(Optional.empty());
+        given(savingsAccountRepository.findSavingsAccountByDni(dni)).willReturn(Optional.empty());
 
         assertThrows(
-                NoSuchElementFoundException.class, () -> underTest.getCreditTransactionHistory(dni, 0, 5));
-        verify(transactionRepository, never()).findAllByPersonalCreditId(any(), any());
+                NoSuchElementFoundException.class, () -> underTest.getAccountTransactionHistory(dni, 0, 5));
+        verify(transactionRepository, never()).findAllBySavingsAccount(any(), any());
     }
 
     @Test
@@ -93,12 +92,12 @@ class TransactionServiceTest {
     void shouldRaiseInvalidValueProvidedExceptionWhenPageOrPageSizeAreNotValid() {
         String dni = "47081541";
 
-        given(personalCreditRepository.findActiveCreditByDni(dni))
-                .willReturn(Optional.of(PersonalCredit.builder().build()));
+        given(savingsAccountRepository.findSavingsAccountByDni(dni))
+                .willReturn(Optional.of(SavingsAccount.builder().build()));
 
         assertThrows(
                 InvalidValueProvidedException.class,
-                () -> underTest.getCreditTransactionHistory(dni, 0, -5));
-        verify(transactionRepository, never()).findAllByPersonalCreditId(any(), any());
+                () -> underTest.getAccountTransactionHistory(dni, 0, -5));
+        verify(transactionRepository, never()).findAllBySavingsAccount(any(), any());
     }
 }

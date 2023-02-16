@@ -18,7 +18,7 @@ class IntegrationTest {
     @Test
     @Order(1)
     @DisplayName("El cliente puede solicitar un nuevo crédito cuando los datos son correctos")
-    void canRequestCredit() throws Exception {
+    void canRequestCredit() {
         webTestClient.post()
                 .uri("/api/credits/personal")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -40,9 +40,10 @@ class IntegrationTest {
     @Test
     @Order(2)
     @DisplayName("Puede pagar el crédito cuando los datos son válidos")
-    void canPayCredit() throws Exception {
+    void canPayCredit() {
         String dni = "47081541";
-        webTestClient.post().uri("/api/credits/personal/{dni}/paid", dni)
+        webTestClient.post()
+                .uri("/api/credits/personal/{dni}/paid", dni)
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue("{" +
                         "    \"paymentMethod\":\"SAVINGS_ACCOUNT\"," +
@@ -56,10 +57,11 @@ class IntegrationTest {
     @Test
     @Order(3)
     @DisplayName("Puede obtener el balance del crédito cuando existe dicho crédito")
-    void canGetCreditBalance() throws Exception {
+    void canGetCreditBalance() {
         String dni = "47081541";
 
-        webTestClient.get().uri("/api/credits/personal/{dni}/balance", dni)
+        webTestClient.get()
+                .uri("/api/credits/personal/{dni}/balance", dni)
                 .exchange()
                 .expectStatus()
                 .isOk();
@@ -68,10 +70,11 @@ class IntegrationTest {
     @Test
     @Order(4)
     @DisplayName("Puede obtener las transacciones del crédito cuando existe dicho crédito")
-    void canGetCreditTransactionHistory() throws Exception {
+    void canGetCreditTransactionHistory() {
         String dni = "47081541";
 
-        webTestClient.get().uri(uriBuilder -> uriBuilder
+        webTestClient.get()
+                .uri(uriBuilder -> uriBuilder
                         .path("/api/credits/personal/{dni}/transactions")
                         .queryParam("page", "1")
                         .queryParam("page_size", "10")

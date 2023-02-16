@@ -85,7 +85,7 @@ public class SavingsAccountController {
      * @param paymentInfo the payment info
      * @return the response entity
      */
-    @PostMapping("/{dni}/paid")
+    @PostMapping("/{dni}/payment")
     public ResponseEntity<SavingsAccountResponseDto> payUsingAccount(
             @PathVariable String dni,
             @Valid @RequestBody PaymentInfoDto paymentInfo) {

@@ -3,8 +3,8 @@ package com.nttdata.creditspersonalservice.controller;
 import com.nttdata.creditspersonalservice.controller.exception.NoSuchElementFoundException;
 import com.nttdata.creditspersonalservice.dto.PersonalCreditResponseDto;
 import com.nttdata.creditspersonalservice.dto.transaction.TransactionDataDto;
-import com.nttdata.creditspersonalservice.service.implementation.PersonalCreditServiceImpl;
-import com.nttdata.creditspersonalservice.service.implementation.TransactionServiceImpl;
+import com.nttdata.creditspersonalservice.service.PersonalCreditService;
+import com.nttdata.creditspersonalservice.service.TransactionService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +21,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class PersonalCreditControllerTest {
 
     @MockBean
-    private PersonalCreditServiceImpl personalCreditService;
+    private PersonalCreditService personalCreditService;
     @MockBean
-    private TransactionServiceImpl transactionService;
+    private TransactionService transactionService;
     @Autowired
     private MockMvc mockMvc;
 
