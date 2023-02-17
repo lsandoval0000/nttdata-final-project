@@ -28,6 +28,13 @@ docker run --restart unless-stopped --name mysqldb -p 3306:3306 -e MYSQL_ROOT_PA
 
 **Nota: Las bases de datos se deben crear manualmente.**
 
+- bank-account-savings-service
+- credit-card
+- credits-personal-service
+- current_account
+- customer
+
+
 ## Comandos Docker para servidor KeyCloak
 
 ```
