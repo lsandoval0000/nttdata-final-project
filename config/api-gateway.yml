@@ -33,7 +33,7 @@ spring:
         - id: credit-card
           uri: lb://credit-card
           predicates:
-            - Path=/api/credit-card/**
+            - Path=/api/credit-card/**, /api/credit-card-transactions/**
   security:
     oauth2:
       resourceserver:
