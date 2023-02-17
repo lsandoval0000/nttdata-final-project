@@ -21,6 +21,7 @@
         <module>registry-server</module>
         <module>credits-personal-service</module>
         <module>bank-account-savings-service</module>
+        <module>credit-card</module>
     </modules>
 
     <properties>

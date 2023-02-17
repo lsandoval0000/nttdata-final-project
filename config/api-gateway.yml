@@ -30,6 +30,11 @@ spring:
           uri: lb://bank-account-savings-service
           predicates:
             - Path=/api/bank-account/savings/**
+        - id: credit-card
+          uri: lb://credit-card
+          predicates:
+            - Path=/api/credit-card/**
+            - Path=/api/credit-card-transactions/**
 
   security:
     oauth2:
