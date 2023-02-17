@@ -23,7 +23,7 @@ Definiéndose lo siguiente:
 
 ## Comando de Docker para la BD
 ```
-docker run --restart unless-stopped --name mysqldb -d -p 3306:3306 -e MYSQL_ROOT_PASSWORD=mysql -e mysql
+docker run --restart unless-stopped --name mysqldb -p 3306:3306 -e MYSQL_ROOT_PASSWORD=mysql -d mysql
 ```
 
 **Nota: Las bases de datos se deben crear manualmente.**
