@@ -38,6 +38,10 @@ spring:
           uri: lb://customer
           predicates:
             - Path=/api/customer/**
+        - id: current_account
+          uri: lb://current_account
+          predicates:
+            - Path=/api/current_account/**
   security:
     oauth2:
       resourceserver:

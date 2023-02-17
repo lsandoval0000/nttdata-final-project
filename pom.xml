@@ -23,6 +23,7 @@
         <module>bank-account-savings-service</module>
         <module>credit-card</module>
         <module>customer</module>
+        <module>current_account</module>
     </modules>
 
     <properties>
