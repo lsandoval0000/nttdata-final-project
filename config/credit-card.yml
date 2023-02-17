@@ -1,0 +1,24 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: mysql
+    url: jdbc:mysql://localhost:3306/credit-card
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+  application:
+    name: credit-card
+  zipkin:
+    base-url: http://localhost:9411
+  sleuth:
+    sampler:
+      probability: 1.0
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka:password@localhost:8761/eureka
+
+server:
+  port: 0
