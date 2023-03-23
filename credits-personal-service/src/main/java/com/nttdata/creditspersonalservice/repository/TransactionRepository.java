@@ -5,12 +5,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.stereotype.Repository;
 
 /**
  * The transaction repository.
  */
-@Repository
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
     /**
      * Find all by personal credit id.

@@ -3,7 +3,6 @@ package com.nttdata.creditcard.dto;
 import com.nttdata.creditcard.util.CreditCardStatus;
 import lombok.Data;
 
-import javax.persistence.Column;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import java.io.Serializable;

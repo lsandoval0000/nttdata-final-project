@@ -13,7 +13,6 @@ import com.nttdata.creditspersonalservice.repository.TransactionRepository;
 import com.nttdata.creditspersonalservice.service.PersonalCreditService;
 import com.nttdata.creditspersonalservice.service.externalapi.BankAccountSavingsAccountServiceClient;
 import com.nttdata.creditspersonalservice.service.externalapi.dto.SavingsAccountPaymentInfoDto;
-import com.nttdata.creditspersonalservice.service.externalapi.dto.SavingsAccountResponseDto;
 import com.nttdata.creditspersonalservice.util.*;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang.text.StrSubstitutor;

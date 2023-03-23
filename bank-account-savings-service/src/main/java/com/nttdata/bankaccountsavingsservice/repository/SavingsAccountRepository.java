@@ -3,14 +3,12 @@ package com.nttdata.bankaccountsavingsservice.repository;
 import com.nttdata.bankaccountsavingsservice.entity.SavingsAccount;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 /**
  * The savings account repository.
  */
-@Repository
 public interface SavingsAccountRepository extends JpaRepository<SavingsAccount, Long> {
 
     /**

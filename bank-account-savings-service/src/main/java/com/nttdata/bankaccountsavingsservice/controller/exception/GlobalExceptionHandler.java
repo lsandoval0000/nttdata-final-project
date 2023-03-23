@@ -3,7 +3,7 @@ package com.nttdata.bankaccountsavingsservice.controller.exception;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -19,12 +19,11 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @Override
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
-    @NonNull
     protected ResponseEntity<Object> handleMethodArgumentNotValid(
             MethodArgumentNotValidException methodArgumentNotValidException,
-            @NonNull HttpHeaders headers,
-            @NonNull HttpStatus status,
-            @NonNull WebRequest request) {
+            HttpHeaders headers,
+            HttpStatus status,
+            WebRequest request) {
         ErrorResponse errorResponse = new ErrorResponse(
                 HttpStatus.UNPROCESSABLE_ENTITY.value(),
                 "Errores de validación. Revisar el campo 'errors' para ver los detalles."
@@ -41,13 +40,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @Override
-    @NonNull
     protected ResponseEntity<Object> handleExceptionInternal(
-            @NonNull Exception exception,
-            Object body,
-            @NonNull HttpHeaders httpHeaders,
-            @NonNull HttpStatus httpStatus,
-            @NonNull WebRequest webRequest) {
+            Exception exception,
+            @Nullable Object body,
+            HttpHeaders httpHeaders,
+            HttpStatus httpStatus,
+            WebRequest webRequest) {
         exception.printStackTrace();
         return buildErrorResponse(exception, httpStatus, webRequest);
     }
