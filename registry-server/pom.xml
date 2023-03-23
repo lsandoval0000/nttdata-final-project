@@ -10,13 +10,7 @@
     </parent>
 
     <artifactId>registry-server</artifactId>
-
-    <properties>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
-
+    
     <dependencies>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
