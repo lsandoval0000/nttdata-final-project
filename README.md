@@ -24,6 +24,8 @@ Definiéndose lo siguiente:
 ## Comando de Docker para la BD
 ```
 docker run --restart unless-stopped --name mysqldb -p 3306:3306 -e MYSQL_ROOT_PASSWORD=mysql -d mysql
+
+docker run --restart unless-stopped --name postgresdb -p 5432:5432 -e POSTGRES_PASSWORD=1234 -d postgres
 ```
 
 **Nota: Las bases de datos se deben crear manualmente.**

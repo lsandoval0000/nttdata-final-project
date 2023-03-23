@@ -1,9 +1,8 @@
 spring:
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    username: root
-    password: mysql
-    url: jdbc:mysql://localhost:3306/bank-account-savings-service
+    username: postgres
+    password: 1234
+    url: jdbc:postgresql://localhost:5432/bank-account-savings-service
   jpa:
     hibernate:
       ddl-auto: create-drop

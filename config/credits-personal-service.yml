@@ -1,9 +1,8 @@
 spring:
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    username: root
-    password: mysql
-    url: jdbc:mysql://localhost:3306/credits-personal-service
+    username: postgres
+    password: 1234
+    url: jdbc:postgresql://localhost:5432/credits-personal-service
   jpa:
     hibernate:
       ddl-auto: create-drop
