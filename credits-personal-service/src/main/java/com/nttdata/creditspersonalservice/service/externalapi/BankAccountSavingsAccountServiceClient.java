@@ -7,11 +7,13 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @FeignClient(name = "bank-account-savings-service", configuration = {BankAccountSavingsAccountServiceErrorDecoder.class})
+@RequestMapping("/api/bank-account")
 public interface BankAccountSavingsAccountServiceClient {
 
-    @PostMapping(value = "/api/bank-account/savings/{dni}/payment")
+    @PostMapping(value = "/savings/{dni}/payment")
     SavingsAccountResponseDto payUsingAccount(
             @PathVariable String dni,
             @RequestBody SavingsAccountPaymentInfoDto paymentInfo);

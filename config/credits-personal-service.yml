@@ -1,3 +1,6 @@
+server:
+  port: ${PORT:${SERVER_PORT:0}}
+
 spring:
   datasource:
     username: postgres
@@ -18,9 +21,8 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://eureka:password@localhost:8761/eureka
-
-server:
-  port: 8091
+    instance:
+      instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
 
 management:
   endpoints:
