@@ -8,6 +8,7 @@ import com.nttdata.creditspersonalservice.dto.newcredit.NewPersonalCreditRequest
 import com.nttdata.creditspersonalservice.dto.payment.PaymentInfoDto;
 import com.nttdata.creditspersonalservice.entity.PersonalCredit;
 import com.nttdata.creditspersonalservice.entity.Transaction;
+import com.nttdata.creditspersonalservice.event.PaidCreditEvent;
 import com.nttdata.creditspersonalservice.repository.PersonalCreditRepository;
 import com.nttdata.creditspersonalservice.repository.TransactionRepository;
 import com.nttdata.creditspersonalservice.service.PersonalCreditService;
@@ -16,6 +17,7 @@ import com.nttdata.creditspersonalservice.service.externalapi.dto.SavingsAccount
 import com.nttdata.creditspersonalservice.util.*;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang.text.StrSubstitutor;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,6 +41,7 @@ public class PersonalCreditServiceImpl implements PersonalCreditService {
     private final NewPersonalCreditRequestDtoMapper newPersonalCreditRequestDtoMapper;
     private final PersonalCreditRepository personalCreditRepository;
     private final TransactionRepository transactionRepository;
+    private final KafkaTemplate<String, PaidCreditEvent> kafkaTemplate;
 
     /**
      * Request personal credit.
@@ -105,7 +108,9 @@ public class PersonalCreditServiceImpl implements PersonalCreditService {
         transaction.setDescription(paymentOption(paymentInfo, transaction, personalCredit));
 
         personalCredit = personalCreditRepository.save(personalCredit);
-        transactionRepository.save(transaction);
+        Transaction savedTransaction = transactionRepository.save(transaction);
+
+        kafkaTemplate.send("notificationTopic",new PaidCreditEvent(savedTransaction.getId().toString()));
 
         return PersonalCreditResponseDto
                 .builder()

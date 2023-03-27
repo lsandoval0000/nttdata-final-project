@@ -23,6 +23,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.BeanUtils;
+import org.springframework.kafka.core.KafkaTemplate;
 
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -47,6 +48,8 @@ class PersonalCreditServiceTest {
     @Mock
     private PersonalCreditRepository personalCreditRepository;
     private PersonalCreditService underTest;
+    @Mock
+    private KafkaTemplate kafkaTemplate;
 
     @BeforeEach
     void setup() {
@@ -57,7 +60,8 @@ class PersonalCreditServiceTest {
                 personalCreditDtoMapper,
                 newPersonalCreditRequestDtoMapper,
                 personalCreditRepository,
-                transactionRepository);
+                transactionRepository,
+                kafkaTemplate);
     }
 
     @Test
